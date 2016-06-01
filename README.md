@@ -1,8 +1,7 @@
 # Protous: BlackBox
 A  Modulue Based, Client Side, Backend API and Application Framework for creating secure web and hybrid mobile applications.
 
-## Introduction
-###What does it do?
+##What does it do?
 
 Protous-BlackBox brings secure backend functionality to the client side. This means that you can set up a fully functional web application without the need for a web server or database.
 
