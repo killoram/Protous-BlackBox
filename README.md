@@ -1,4 +1,5 @@
 <img src="https://scontent-lga3-1.xx.fbcdn.net/v/t1.0-9/13322149_496026890588396_132787504032628895_n.jpg?oh=e73f599317982b03b9c0add391d0d10c&oe=57E1688B" alt="Protous BlackBox Banner">
+
 A  Modulue Based, Client Side, Backend API and Application Framework for creating secure web and hybrid mobile applications.
 
 ##What does it do?
@@ -18,13 +19,13 @@ In one line of code you can construct a full backend of your application.
 Say you want to have a user account system, and you want to store/handle posts, comments, likes, and friendships:
 
 ```js
-var myApp = PROTOUS_MODULE.app('friendships,posts,comments,likes','appUsers');
+var myApp = new PROTOUS_BACKBOX.app('friendships,posts,comments,likes','appUsers');
 ```
 The above code creates a super object (myApp) that contains all the functions, mothods, and security measures for the whole application.
 As soon as you place that line of code in your main module...
 ```js
 var myApp = (function(){
-  var backend = PROTOUS_MODULE.app('friendships,posts,comments,likes','appUsers');
+  var backend = new PROTOUS_BLACKBOX.app('friendships,posts,comments,likes','appUsers');
   //Any aplication operations (mainly event responses and triggers) go here
 })();
 ```
@@ -52,21 +53,22 @@ Note that Protous IS IN FACT MODULE BASED so IF YOU DO NOT UNDERSTAND MODULAR JS
 
 Lets say you want to test it out by making a simple online store application:
 ```js
-var app = (function(){
-	var backend = new PROTOUS_MODULE.app("categories,products,cartProducts","customers");
-})();
+var app = (function(PROTOUS_BLACKBOX){
+	var backend = new PROTOUS_BLACKBOX.app("categories,products,cartProducts","customers"); //Construct a new app
+})(PROTOUS_BLACKBOX);
 ```
 The above code sets up the backend of your application.
 Although it may not look like much...That middle line of code returns a super object full of functions for handling all data in your entire application and initializes your application storage.
-Don't belive me? Try running ( var backend = new PROTOUS_MODULE.app("categories,products,cartProducts","customers"); ) in your javascript console and navigate the returned object.
+Don't belive me? Try running ( var backend = new PROTOUS_BLACKBOX.app("categories,products,cartProducts","customers"); ) in your javascript console and navigate the returned object.
 Now this short snippet of code creates the whole backend for your app but it is no use if you don't do anything with it...
 ```js
-var app = (function(){
-	var backend = new PROTOUS_MODULE.app("categories,products,cartProducts","customers");
-	events.respond('submitProduct', function(data){
+var app = (function(PROTOUS_BLACKBOX){
+	var backend = new PROTOUS_BLACKBOX.app("categories,products,cartProducts","customers"); //Construct a new app
+	var events = PROTOUS_BLACKBOX.import('eventSystem'); //import the eventSystem
+	newResponse(events, 'submitProduct', function(data){ //Set a new response (in 'events') for the 'submitProduct' event
 		backend['products'].add(data);
 	});
-})();
+})(PROTOUS_BLACKBOX);
 ```
 The above code shows the use of the Protous event BUS (Which is technically a pubsub).
 It allows you "respond", "trigger", or "neglect" an event. In this case, we are storing the event data as the product object in the backend of the application.
@@ -89,36 +91,38 @@ Now lets say you want to display all the products in a div from your DOM. The fo
 ```
 Assuming that your product objects have the following properties (title, price, description, and image) this would loop through all of your products (thus logic-all="true") and display the markup within the loop element (replacing the (-propertyName-)s with the property values) for each product that is stored. But wait, that won't work! You have not yet given app the dsLogic method. To import Protous functions simply return them as properties to your app object:
 ```js
-var app = (function(){
-	var backend = new PROTOUS_MODULE.app("categories,products,cartProducts","customers");
-	events.respond('userRegistered', function(data){
+var app = (function(PROTOUS_BLACKBOX){
+	var backend = new PROTOUS_BLACKBOX.app("categories,products,cartProducts","customers");
+	var events = PROTOUS_BLACKBOX.import('eventSystem');
+	newResponse('userRegistered', function(data){
 		backend['customers'].SignUp(data.username,data.properties,data.used||null);
 	});
 	return {
-		dsLogic: backend.dsLogic
+		dsLogic: PROTOUS_BLACKBOX.import('dsLogic')
 	}; 
-})();
+})(PROTOUS_BLACKBOX);
 ```
 You could include all of the data looping functions if you wanted:
 ```js
-var app = (function(){
-	var backend = new PROTOUS_MODULE.app("categories,products,cartProducts","customers");
-	events.respond('userRegistered', function(data){
+var app = (function(PROTOUS_BLACKBOX){
+	var backend = new PROTOUS_BLACKBOX.app("categories,products,cartProducts","customers");
+	var events = PROTOUS_BLACKBOX.import('eventSystem');
+	newResponse('userRegistered', function(data){
 		backend['customers'].SignUp(data.username,data.properties,data.used||null);
 	});
-	events.respond('submitProduct', function(data){
+	newResponse('submitProduct', function(data){
 		backend['product'].add(data);
 	});
 	return {
-		protousLogic: backend.ProtousLogic,
-		generateAllLoop: backend.generateAllLoop,
-		generateWhereLoop: backend.generateWhereLoop,
-		addAllLoop: backend.addWhereLoop,
-		addWhereLoop: backend.addWhereLoop,
-		dsLogic: backend.dsLogic,
-		logicLoop: backend.logicLoop
+		protousLogic: PROTOUS_BLACKBOX.import('ProtousLogic'),
+		generateAllLoop: PROTOUS_BLACKBOX.import('generateAllLoop'),
+		generateWhereLoop: PROTOUS_BLACKBOX.import('generateWhereLoop'),
+		addAllLoop: PROTOUS_BLACKBOX.import('addWhereLoop'),
+		addWhereLoop: PROTOUS_BLACKBOX.import('addWhereLoop'),
+		dsLogic: PROTOUS_BLACKBOX.import('dsLogic'),
+		logicLoop: PROTOUS_BLACKBOX.import('logicLoop')
 	}; 
-})();
+})(PROTOUS_BLACKBOX);
 ```
 But that isn't needed.
 
@@ -127,7 +131,7 @@ I hope this gave you a feel for what Protous 4 can do. This documentation will b
 
 # Documentation
 
-PROTOUS_MODULE.app is a constructor for creating the backend of an application.
+PROTOUS_BLACKBOX.app is a constructor for creating the backend of an application.
 SYNTAX: app(DATA_SECTIONS, USER_ACCOUNT_SYSTEMS);
 DataSections are the types of data that you want to store and handle: posts, comments, products, messages, etc...
 User Account Systems are exactly that
@@ -138,7 +142,7 @@ Neither Parameters require more than one element but if there are they MUST BE S
 ##Protous Application Syntax
 
 ```js
-var myApp = new PROTOUS_MODULE.app("posts,comments,likes","users");
+var myApp = new PROTOUS_BLACKBOX.app("posts,comments,likes","users");
 
 //Application Syntax: APP[DATASECTION][FUNCTION](PARAMETERS);
 myApp['posts']['add']({
