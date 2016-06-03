@@ -24,10 +24,10 @@ var myApp = new PROTOUS_BACKBOX.app('friendships,posts,comments,likes','appUsers
 The above code creates a super object (myApp) that contains all the functions, mothods, and security measures for the whole application.
 As soon as you place that line of code in your main module...
 ```js
-var myApp = (function(){
+var myApp = (function(PROTOUS_BLACKBOX){
   var backend = new PROTOUS_BLACKBOX.app('friendships,posts,comments,likes','appUsers');
   //Any aplication operations (mainly event responses and triggers) go here
-})();
+})(PROTOUS_BLACKBOX);
 ```
 You're secure and ready to role!
 
