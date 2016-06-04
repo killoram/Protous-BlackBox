@@ -1,3 +1,4 @@
+// This software may be distributed under the terms of the General Public License as defined in the local license file.
 function getFormValues(ids){ids=ids.split(",");var response={};for(var i=0;i<ids.length;i++){response[ids[i]]=document.getElementById(ids[i]).value;}
 return response;}
 function getWholeForm(form){var response={};var elements=document.getElementById(form).elements;for(var i=0;i<elements.length;i++){if(elements[i].tagName=="INPUT"||elements[i].tagName=="SELECT"||elements[i].tagName=="TEXTAREA"){var backup=elements[i].tagName+Math.floor(Math.random()*500);var title=elements[i].name!=""?elements[i].name:(elements[i].id!=""?elements[i].id:backup);response[title]=elements[i].value;}}
