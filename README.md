@@ -2,7 +2,7 @@
 
 A  Modulue Based, Client Side, Backend API and Application Framework for creating secure web and hybrid mobile applications.
 
-# Version 1.1.2
+# Version 1.2.2
 
 ##What does it do?
 
