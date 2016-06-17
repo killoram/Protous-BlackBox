@@ -96,7 +96,7 @@ Assuming that your product objects have the following properties (title, price, 
 var app = (function(PROTOUS_BLACKBOX){
 	var backend = new PROTOUS_BLACKBOX.app("categories,products,cartProducts","customers");
 	var events = PROTOUS_BLACKBOX.import('eventSystem');
-	newResponse('userRegistered', function(data){
+	newResponse(events,'userRegistered', function(data){
 		backend['customers'].SignUp(data.username,data.properties,data.used||null);
 	});
 	return {
@@ -109,10 +109,10 @@ You could include all of the data looping functions if you wanted:
 var app = (function(PROTOUS_BLACKBOX){
 	var backend = new PROTOUS_BLACKBOX.app("categories,products,cartProducts","customers");
 	var events = PROTOUS_BLACKBOX.import('eventSystem');
-	newResponse('userRegistered', function(data){
+	newResponse(events,'userRegistered', function(data){
 		backend['customers'].SignUp(data.username,data.properties,data.used||null);
 	});
-	newResponse('submitProduct', function(data){
+	newResponse(events,'submitProduct', function(data){
 		backend['product'].add(data);
 	});
 	return {
