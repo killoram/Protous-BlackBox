@@ -204,10 +204,15 @@ updateUserProperty(username,propertyToChange,value) | undefined  | Updates (or e
 
 Similar to most server-side programming languages, Protous BlackBox allows you to handle url-encoded data from the current URL.
 For those of you who program in PHP this would look like:
-```php
+```PHP
 var test = $_GET['test'];
 ```
-This would grab the value of test from a URL such as: https://example.com/index.php?test=hello%20world
+For those of you who prefer C# in ASP.net
+```C#
+Request.QueryString["parameter1"];
+```
+
+Both instances would grab the value of test from a URL such as: https://example.com/index.php?test=hello%20world
 BlackBox automatically decodes and sorts the data into an associative array. It can be accessed by importing it into your module:
 
 ```js
