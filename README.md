@@ -200,6 +200,24 @@ getUser(username)                            | object            | Return the us
 updateUser(username,OBJECT)                  | undefined         | Overrides the userObject for the given username with the given object.
 updateUserProperty(username,propertyToChange,value) | undefined  | Updates (or edits) a property of the userObject for the given username by changing it to the given value.
 
+##URL Data
+
+Similar to most server-side programming languages, Protous BlackBox allows you to handle url-encoded data from the current URL.
+For those of you who program in PHP this would look like:
+```php
+var test = $_GET['test'];
+```
+This would grab the value of test from a URL such as: https://example.com/index.php?test=hello%20world
+BlackBox automatically decodes and sorts the data into an associative array. It can be accessed by importing it into your module:
+
+```js
+var myApp = (function(PROTOUS_BLACKBOX){
+  var backend = new PROTOUS_BLACKBOX.app('friendships,posts,comments,likes','appUsers');
+  var GET = PROTOUS_BLACKBOX.import('URLdata');
+  var test = GET['test'];
+})(PROTOUS_BLACKBOX);
+```
+
 ##Form handling functions:
 
 Protous 4.0 has 3 form handling functions:
