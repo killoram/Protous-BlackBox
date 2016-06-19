@@ -205,7 +205,7 @@ updateUserProperty(username,propertyToChange,value) | undefined  | Updates (or e
 Similar to most server-side programming languages, Protous BlackBox allows you to handle url-encoded data from the current URL.
 For those of you who program in PHP this would look like:
 ```PHP
-var test = $_GET['test'];
+$_GET['test'];
 ```
 For those of you who prefer C# in ASP.net
 ```C#
