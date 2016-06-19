@@ -23,7 +23,7 @@ Say you want to have a user account system, and you want to store/handle posts, 
 ```js
 var myApp = new PROTOUS_BACKBOX.app('friendships,posts,comments,likes','appUsers');
 ```
-The above code creates a super object (myApp) that contains all the functions, mothods, and security measures for the whole application.
+The above code creates a super object (myApp) that contains all the functions, methods, and security measures for the whole application.
 As soon as you place that line of code in your main module...
 ```js
 var myApp = (function(PROTOUS_BLACKBOX){
